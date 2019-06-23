@@ -15,5 +15,5 @@ A Microsoft school or work account is required with access to MS Planner. Any pl
 
 You will also nee to register your app in Azure AD and store the reply url for your app (e.g. localhost or your chosen domain).
 
-![image](https://imgur.com/a/a18tHkx)
+![screenshot](https://imgur.com/a/a18tHkx)
 # Kanban-with-MS-Graph-Integration
