@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="refresh" content="900" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Your Kanban</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+	<link rel="stylesheet" href="./public/styles/kb_style.css">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+</head>
+
+<body>
+	<!-- loader -->
+	<div class="loading" delay-hide="4000"></div>
+	<!-- Delay Hide + default: 50sec
+After a time the loading screen will be hidden -->
+	<!-- Navbar start -->
+	<nav class="navbar navbar-expand-lg ">
+		<img src="#" height="30" alt="company Logo" />
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			</ul>
+			<h4 id="WelcomeMessage" class=""></h4>
+			<!-- Button trigger MS modal -->
+			<button type="button" class="btn btn-primary my-2 my-sm-0" data-toggle="modal"
+				data-target="#exampleModalLong">Settings
+			</button>
+
+			<button type="button" class="btn btn-primary my-2 my-sm-0" id="SignIn" onclick="signIn()">
+				Login
+			</button>
+			<!-- <img src="images/serdar.jpg" alt="serdar" class="img-thumbnail" id="img-thumbnail-user"> -->
+		</div>
+	</nav>
+	<!-- Navbar End -->
+	<!-- Modal -->
+	<div class="modal" id="exampleModalLong" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header">
+					<h3 class="modal-title" id="exampleModalLongTitle">Settings</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="">
+						<li class="bucketsCheckboxes">
+							<h5>Buckets</h5>
+						</li>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" checked="checked"
+								onClick="toggleBuckets(this)" id="bucketCheckbox1" value="option1">
+							<label class="form-check-label" for="bucketCheckbox1">Backlog</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" checked="checked"
+								onClick="toggleBuckets(this)" id="bucketCheckbox2" value="option2">
+							<label class="form-check-label" for="bucketCheckbox2">Planned</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" checked="checked"
+								onClick="toggleBuckets(this)" id="bucketCheckbox3" value="option3">
+							<label class="form-check-label" for="bucketCheckbox3">In Progress</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" autocomplete="off"
+								onClick="toggleBuckets(this)" id="CB6" value="option6">
+							<label class="form-check-label" for="CB6">QA</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" checked="checked"
+								onClick="toggleBuckets(this)" id="bucketCheckbox4" value="option4">
+							<label class="form-check-label" for="bucketCheckbox4">Done</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" onClick="toggleBuckets(this)"
+								id="bucketCheckbox5" value="option5">
+							<label class="form-check-label" for="bucketCheckbox5">Completed</label>
+						</div>
+						<hr>
+					</ul>
+					<ul class="">
+						<!-- <li class="projectCheckboxes"> -->
+						<h5>Projects</h5>
+
+						<!-- colorpicker -->
+						<section>
+							<form action="http://yourURL:3000/plans" method="POST" target="_blank">
+								<div class="row">
+									<div class="col">
+										<input id="planIdInput" autocomplete="off" name="planID" data-toggle="tooltip"
+											data-placement="top"
+											title="Enter Plan ID from the relevant plan, located in the URL within it's Planner page"
+											type="text" class="form-control" placeholder="Plan ID" />
+									</div>
+									<div class="col">
+										<input id="planNameInput" autocomplete="off" name="planName"
+											data-toggle="tooltip" data-placement="top"
+											title="Enter matching Plan name from the relevant plan, located in the URL within it's Planner page"
+											type="text" class="form-control" placeholder="Plan Name" />
+									</div>
+									<!-- <div id="hex">
+										<input data-toggle="tooltip" name="barColor" data-placement="top"
+											title="Select a color to fill the sidebar of your plan" type="color"
+											id="color" value="#0000ff" onchange="changeColor()" />
+									</div> -->
+									<button type="submit" id="modalSubmit" class="btn btn-primary">Add New</button>
+									<button type="submit" id="deletePlanBtn" class="btn btn-primary">Delete
+										Plan</button>
+							</form>
+						</section>
+						<div class="plansCb"></div>
+						<!-- colorpicker -->
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary applyFilters" data-dismiss="modal">Apply
+						Filters</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ******** End of modal ********* -->
+	<pre id="json"></pre>
+	<ul class="users">
+		<li class="userCheckboxes" id="userCheckboxes">
+			<h5>Users</h5>
+			<!-- ***** select all boxes **** -->
+			<!-- <button  id="userCheckboxAll" name="select-all" type="button">Select All</button> -->
+			<input type="checkbox" name="select-all" id="userCheckboxAll" checked="checked" />Select All</input>
+		</li>
+	</ul>
+	<!-- ******* Start of Swimlane Toggle ************* -->
+	<div class="drag-container ">
+		<ul class="drag-list">
+			<li class="drag-column drag-column-backlog backlog">
+				<span class="drag-column-header">
+					<h2>Backlog</h2>
+					<svg class="drag-header-more" data-target="options4" fill="#3174b3" height="24" viewBox="0 0 24 24"
+						width="24">
+						<path d="M0 0h24v24H0z" fill="none" />
+						<path
+							d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+							</svg> </span> <div class="drag-options" id="options4">
+	</div>
+	<ul class="drag-inner-list" id="4" data-title="Backlog">
+	</ul>
+	</li>
+	<li class="drag-column drag-column-planned planned">
+		<span class="drag-column-header">
+			<h2>Planned</h2>
+			<svg class="drag-header-more" data-target="options1" fill="#3174b3" height="24" viewBox="0 0 24 24"
+				width="24">
+				<path d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+					</svg> </span> <div class="drag-options" id="options1">
+					</div>
+					<ul class="drag-inner-list" id="1" data-title="Planned">
+					</ul>
+	</li>
+	<li class="drag-column drag-column-in-progress in-progress">
+		<span class="drag-column-header">
+			<h2>In Progress</h2>
+			<svg class="drag-header-more" data-target="options2" fill="#3174b3" height="24" viewBox="0 0 24 24"
+				width="24">
+				<path d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+					</svg> </span> <div class="drag-options" id="options2">
+					</div>
+					<ul class="drag-inner-list" id="2" data-title="In Progress">
+					</ul>
+	</li>
+	<li class="drag-column drag-column-QA QA">
+		<span class="drag-column-header">
+			<h2>QA</h2>
+			<svg class="drag-header-more" data-target="options6" fill="#3174b3" height="24" viewBox="0 0 24 24"
+				width="24">
+				<path d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+					</svg> </span> <div class="drag-options" id="options6">
+					</div>
+					<ul class="drag-inner-list" id="6" data-title="QA">
+					</ul>
+	</li>
+	<li class="drag-column drag-column-done done">
+		<span class="drag-column-header">
+			<h2>Done</h2>
+			<svg data-target="options3" class="drag-header-more" fill="#3174b3" height="24" viewBox="0 0 24 24"
+				width="24">
+				<path d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+					</svg> </span> <div class="drag-options" id="options3">
+					</div>
+					<ul class="drag-inner-list" id="3" data-title="Done">
+					</ul>
+	</li>
+	<li class="drag-column drag-column-completed" style="display: none">
+		</style>
+		<div class="drag-column-header">
+			<h2>Completed</h2>
+			<svg data-target="options5" class="drag-header-more" fill="#3174b3" height="24" viewBox="0 0 24 24"
+				width="24">
+				<path d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/
+					</svg> </div> <div class="drag-options" id="options5">
+		</div>
+		<ul class="drag-inner-list" id="5">
+		</ul>
+	</li>
+	</div>
+	<!--  End of Swimlane -->
+	<!-- scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+		integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+	<script src="https://secure.aadcdn.microsoftonline-p.com/lib/0.1.7/js/msal.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+	<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/45226/dragula.min.js"></script>
+	<script src="https://kit.fontawesome.com/af46b022eb.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+	</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
+	</script>
+	<script src="./public/js/loader.js" type="text/javascript"></script>
+	<script src="./public/js/kb-index.js" type="text/javascript"></script>
+	<script src="./public/js/index.js"></script>
+</body>
+
+</html>
